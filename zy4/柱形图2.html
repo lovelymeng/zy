@@ -1,0 +1,278 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>柱形图展示页面</title> 
+<meta charset="UTF-8"> 
+<link rel="stylesheet" href="css/style1.css"> 
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script> 
+</head> 
+<body> 
+<div id="chart-container" class="chart-container"></div> 
+<div class="control-panel"> 
+<label>图表名称：<input type="text" id="title-input" class="input-control"></label> 
+<label>柱形颜色：<input type="color" id="color-input" class="input-control"></label> 
+<label>销售额数据表：</label> 
+<table class="data-table"> 
+<thead> 
+<tr> 
+<th>月份</th> 
+<th>销售额</th> 
+<th></th> 
+</tr> 
+</thead> 
+<tbody id="data-table"></tbody> 
+</table> 
+<button id="add-row" class="control-button">添加行</button> 
+<button id="remove-row" class="control-button">删除行</button> 
+<button id="update-data" class="control-button">更新数据</button> 
+<select id="chart-list" class="input-control"> 
+<option value="chart1">柱形图1</option> 
+<option value="chart2">柱形图2</option> 
+<option value="chart3">柱形图3</option> 
+<option value="new-chart">新建柱形图</option> 
+</select> 
+<button id="add-chart" class="control-button">添加新图表</button> 
+</div> 
+
+<script> 
+// 初始化 ECharts 实例 
+var myChart = echarts.init(document.getElementById('chart-container')); 
+
+// 配置默认选项 
+var defaultOption = { 
+title: { 
+text: '月销售额' 
+}, 
+tooltip: {}, 
+legend: { 
+data:['销售额'] 
+}, 
+xAxis: { 
+data: ["1月","2月","3月","4月","5月","6月"] 
+}, 
+yAxis: {}, 
+series: [{ 
+name: '销售额', 
+type: 'bar', 
+data: [100, 200, 300, 400, 500, 600], 
+label: { 
+show: true, 
+position: 'top' 
+}, 
+itemStyle: { 
+color: '#c23531' 
+} 
+}] 
+}; 
+
+var charts = { 
+chart1: { 
+option: defaultOption, 
+data: [ 
+{month: '1月', sales: 100}, 
+{month: '2月', sales: 200}, 
+{month: '3月', sales: 300}, 
+{month: '4月', sales: 400}, 
+{month: '5月', sales: 500}, 
+{month: '6月', sales: 600} 
+] 
+}, 
+chart2: { 
+option: defaultOption, 
+data: [ 
+{month: '1月', sales: 150}, 
+{month: '2月', sales: 250}, 
+{month: '3月', sales: 350}, 
+{month: '4月', sales: 450}, 
+{month: '5月', sales: 550}, 
+{month: '6月', sales: 650} 
+] 
+}, 
+chart3: { 
+option: defaultOption, 
+data: [ 
+{month: '1月', sales: 80}, 
+{month: '2月', sales: 150}, 
+{month: '3月', sales: 200}, 
+{month: '4月', sales: 350}, 
+{month: '5月', sales: 400}, 
+{month: '6月', sales: 550} 
+] 
+} 
+}; 
+
+var activeChart = 'chart1'; 
+
+// 加载数据并渲染柱形图 
+myChart.setOption(charts[activeChart].option); 
+
+// 绑定事件 
+var titleInput = document.getElementById('title-input'); 
+var colorInput = document.getElementById('color-input'); 
+var dataTable = document.getElementById('data-table'); 
+
+function updateOption(option) { 
+option.title.text = titleInput.value; 
+option.series[0].itemStyle.color = colorInput.value; 
+var data = []; 
+for (var i = 0; i < dataTable.rows.length; i++) { 
+var month = dataTable.rows[i].cells[0].innerText; 
+var sales = Number(dataTable.rows[i].cells[1].innerText); 
+data.push({month: month, sales: sales}); 
+} 
+option.xAxis.data = data.map(function(item) { 
+return item.month; 
+}); 
+option.series[0].data = data.map(function(item) { 
+return item.sales; 
+}); 
+} 
+
+function renderDataTable(data) { 
+var html = ''; 
+for (var i = 0; i < data.length; i++) { 
+html += '<tr><td>' + data[i].month + '</td><td>' + data[i].sales + '</td><td class="delete-row"><button class="control-button">删除</button></td></tr>'; 
+} 
+document.getElementById('data-table').innerHTML = html; 
+} 
+
+function setActiveChart(chartName) { 
+activeChart = chartName; 
+var chart = charts[chartName]; 
+myChart.setOption(chart.option); 
+renderDataTable(chart.data); 
+titleInput.value = chart.option.title.text; 
+colorInput.value = chart.option.series[0].itemStyle.color; 
+} 
+
+document.getElementById('sort').addEventListener('click', function() { 
+var data = charts[activeChart].option.series[0].data; 
+data.sort(function(a, b) { 
+return a - b; 
+}); 
+charts[activeChart].option.series[0].data = data; 
+myChart.setOption(charts[activeChart].option); 
+}); 
+
+document.getElementById('filter').addEventListener('click', function() { 
+var data = charts[activeChart].option.series[0].data; 
+var newData = data.filter(function(item) { 
+return item > 300; 
+}); 
+charts[activeChart].option.xAxis.data = ["3月","4月","5月","6月"]; 
+charts[activeChart].option.series[0].data = newData; 
+myChart.setOption(charts[activeChart].option); 
+}); 
+
+document.getElementById('add-label').addEventListener('click', function() { 
+var data = charts[activeChart].option.series[0].data; 
+for (var i = 0; i < data.length; i++) { 
+charts[activeChart].option.series[0].label.formatter = function(params) { 
+return params.value + '\n' + '（' + params.name + '）'; 
+}; 
+} 
+myChart.setOption(charts[activeChart].option); 
+}); 
+
+document.getElementById('add-row').addEventListener('click', function() { 
+var newRow = '<tr><td contenteditable="true"></td><td contenteditable="true"></td><td class="delete-row"><button class="control-button">删除</button></td></tr>'; 
+dataTable.insertAdjacentHTML('beforeend', newRow); 
+}); 
+
+dataTable.addEventListener('click', function(event) { 
+var target = event.target; 
+if (target.tagName === 'BUTTON' && target.classList.contains('control-button')) { 
+var row = target.closest('tr'); 
+row.remove(); 
+} 
+}); 
+
+document.getElementById('update-data').addEventListener('click', function() { 
+updateOption(charts[activeChart].option); 
+myChart.setOption(charts[activeChart].option); 
+}); 
+
+document.getElementById('chart-list').addEventListener('change', function() { 
+var chartName = this.value; 
+if (chartName === 'new-chart') { 
+chartName = 'chart' + (Object.keys(charts).length + 1); 
+charts[chartName] = { 
+option: Object.assign({}, defaultOption), 
+data: [ 
+{month: '1月', sales: 0}, 
+{month: '2月', sales: 0}, 
+{month: '3月', sales: 0}, 
+{month: '4月', sales: 0}, 
+{month: '5月', sales: 0}, 
+{month: '6月', sales: 0} 
+] 
+}; 
+} 
+setActiveChart(chartName); 
+}); 
+
+document.getElementById('add-chart').addEventListener('click', function() { 
+var option = Object.assign({}, defaultOption); 
+var chartName = 'chart' + (Object.keys(charts).length + 1); 
+charts[chartName] = { 
+option: option, 
+data: [ 
+{month: '1月', sales: 0}, 
+{month: '2月', sales: 0}, 
+{month: '3月', sales: 0}, 
+{month: '4月', sales: 0}, 
+{month: '5月', sales: 0}, 
+{month: '6月', sales: 0} 
+] 
+}; 
+var chartOption = document.createElement('option'); 
+chartOption.value = chartName; 
+chartOption.innerText = chartName; 
+document.getElementById('chart-list').appendChild(chartOption); 
+setActiveChart(chartName); 
+}); 
+
+document.getElementById('remove-row').addEventListener('click', function() { 
+var rowCount = dataTable.rows.length; 
+if (rowCount > 0) { 
+dataTable.deleteRow(rowCount - 1); 
+} 
+updateOption(charts[activeChart].option); 
+myChart.setOption(charts[activeChart].option); 
+}); 
+
+// 拖拽和缩放 
+var isDragging = false; 
+var lastX = 0; 
+var lastY = 0; 
+var lastWidth = 0; 
+var lastHeight = 0; 
+
+document.getElementById('chart-container').addEventListener('mousedown', function(event) { 
+isDragging = true; 
+lastX = event.clientX; 
+lastY = event.clientY; 
+lastWidth = this.offsetWidth; 
+lastHeight = this.offsetHeight; 
+}); 
+
+document.addEventListener('mousemove', function(event) { 
+if (isDragging) { 
+var container = document.getElementById('chart-container'); 
+var deltaX = event.clientX - lastX; 
+var deltaY = event.clientY - lastY; 
+var newWidth = lastWidth + deltaX; 
+var newHeight = lastHeight + deltaY; 
+container.style.width = newWidth + 'px'; 
+container.style.height = newHeight + 'px'; 
+} 
+}); 
+
+document.addEventListener('mouseup', function(event) { 
+isDragging = false; 
+}); 
+
+</script> 
+</body> 
+</html> 

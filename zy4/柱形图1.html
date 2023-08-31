@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myChart" width="200" height="200"></canvas>
+<form id="myForm">
+  <label for="q1">第一季度:</label>
+  <input type="number" id="q1" name="q1" value="12000"><br>
+  <label for="q2">第二季度:</label>
+  <input type="number" id="q2" name="q2" value="15000"><br>
+  <label for="q3">第三季度:</label>
+  <input type="number" id="q3" name="q3" value="18000"><br>
+  <label for="q4">第四季度:</label>
+  <input type="number" id="q4" name="q4" value="20000"><br>
+  <input type="submit" value="更新柱形图">
+</form>
+
+<script>
+  // 获取 canvas 元素的上下文
+  const ctx = document.getElementById('myChart').getContext('2d');
+  // 定义 X 轴的标签
+  const labels = ['第一季度', '第二季度', '第三季度', '第四季度'];
+  // 定义数据对象
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: '每个季度的收入',
+      data: [12000, 15000, 18000, 20000], // 这里是 Y 轴的数据
+      backgroundColor: [ // 设置每个柱形图的背景颜色
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)'
+      ],
+      borderColor: [ // 设置每个柱形图边框线条颜色
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)'
+      ],
+      borderWidth: 1 // 设置线条宽度
+    }]
+  };
+  
+   // 创建 Chart 类的实例
+   let myChart = new Chart(ctx, {
+    type: 'bar', // 设置图表类型为柱形图
+    data: data, // 设置数据对象
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true // 设置 Y 轴从零开始
+        }
+      }
+    }
+   });
+   
+   
+   const form = document.getElementById('myForm');
+   
+   form.addEventListener('submit', function(event) {
+     
+     event.preventDefault();
+     
+     const q1 = document.getElementById('q1').value;
+     const q2 = document.getElementById('q2').value;
+     const q3 = document.getElementById('q3').value;
+     const q4 = document.getElementById('q4').value;
+    
+     data.datasets[0].data = [q1, q2, q3, q4];
+     
+     myChart.update();
+   });
+</script>
+</body>
+</html>
