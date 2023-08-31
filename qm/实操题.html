@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .head ul li {
+            background-color: #fff;
+            list-style: none;
+            width: 110px;
+            height: 110px;
+            display: inline-block;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .head ul li a {
+            color: rgb(104, 102, 102);
+            text-decoration: none;
+        }
+
+        .head ul li:hover a {
+            color: rgb(0, 0, 0);
+        }
+
+        .head ul {
+            float: right;
+            margin-right: 140px;
+        }
+
+        .head {
+            margin: 40px auto;
+        }
+
+        .head img {
+            margin-left: 150px;
+        }
+
+        .head ul .aa a {
+            background-color: rgb(209, 206, 206);
+            color: #fff;
+        }
+
+        .bottom {
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+
+        .bottom img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .bottom img.active {
+            opacity: 1;
+        }
+
+        .bottom button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 20px;
+        }
+
+        .bottom button.prev {
+            left: 10px;
+        }
+
+        .bottom button.next {
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="head">
+    <img src="./image/tianer_logo.png" alt="">
+    <ul>
+        <li>
+            <a href="">关于我们</a>
+        </li>
+        <li>
+            <a href="">卓越计划</a>
+        </li>
+        <li>
+            <a href="">战略与发展</a>
+        </li>
+        <li>
+            <a href="">新闻中心</a>
+        </li>
+        <li>
+            <a href="">工作计划</a>
+        </li>
+        <li>
+            <a href="">商业合作</a>
+        </li>
+        <li class="aa">
+            <a href="">中文</a>
+            <span style="color: rgb(118, 116, 116);"> English</span>
+        </li>
+    </ul>
+</div>
+
+
+<div class="bottom">
+    <img src="./image/3-4.jpg" alt="" class="active">
+    <img src="./image/3-4.jpg" alt="">
+    <img src="./image/3-4.jpg" alt="">
+    <img src="./image/3-4.jpg" alt="">
+    <button class="prev"><</button>
+    <button class="next">></button>
+
+</div>
+
+
+<script>
+
+    let images = document.querySelectorAll(".bottom img");
+    let prev = document.querySelector(".bottom button.prev");
+    let next = document.querySelector(".bottom button.next");
+
+    let index = 0;
+
+    function showNextSlide() {
+
+        images[index].classList.remove("active");
+
+        index++;
+
+        if (index == images.length) {
+            index = 0;
+        }
+
+        images[index].classList.add("active");
+    }
+
+    function showPrevSlide() {
+
+        images[index].classList.remove("active");
+
+        index--;
+
+        if (index < 0) {
+            index = images.length - 1;
+        }
+
+        images[index].classList.add("active");
+    }
+
+    next.addEventListener("click", showNextSlide);
+    prev.addEventListener("click", showPrevSlide);
+
+</script>
+</body>
+
+</html>

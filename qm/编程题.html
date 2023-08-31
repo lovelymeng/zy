@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //第一题封装求和函数，功能实现求任意两个数之间所有数的和
+    function getSum(num1, num2) {
+        var sum = 0;
+        for (var i = num1; i <= num2; i++) {
+            sum += i;
+        }
+        return sum;
+    }
+    // 调用函数
+    var result = getSum(1, 100);
+    console.log(result);
+
+    //2.编程实现随机点名案例。需求：请把[‘赵云’，‘黄忠’，‘关羽’，‘张飞’，‘马超’，‘刘备’，‘曹操’]随机显示一个名字到页面中。
+    var arr = ['赵云', '黄忠', '关羽', '张飞', '马超', '刘备', '曹操'];
+    var index = Math.floor(Math.random() * arr.length);
+    console.log(arr[index]);
+
+    //3.数组筛选需求：将数组[2，9，6，1，77，54，24，7]中能被3整除的元素选出来，放入新数组中
+    var arr = [2, 9, 6, 1, 77, 54, 24, 7];
+    var newArr = [];
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] % 3 == 0) {
+            newArr.push(arr[i]);
+        }
+    }
+    console.log(newArr);
+
+
+</script>
+</body>
+</html>
