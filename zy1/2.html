@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            position: relative;
+
+        }
+        body{
+            background: #F5F5F5;
+        }
+        span{
+            color: #D8CEC9;
+        }
+        p{
+            color: orange;
+        }
+        ul li{
+            list-style: none;
+            padding-bottom: 5px;
+        }
+        ul{
+            position: absolute;
+            top: 366px;
+            left: 90px;
+        }
+        .images_shooping{
+            width: 829px;
+            height: 675px;
+            background: url("img/car.jpg")no-repeat;
+        }
+        #father{
+            width: 300px;
+            height: 500px;
+            background-color: white;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="father" style="margin: 0 auto;">
+    <div class="images_shooping"></div>
+    <ul>
+        <li><h4>九号平衡车</h4></li>
+        <li> <span>成年人的玩具</span></li>
+        <li>  <p>1999元</p></li>
+    </ul>
+</div>
+<script>
+var script = document.createElement("script");
+script.setAttribute("type","text/javascript");
+script.setAttribute("id","myhk");
+script.setAttribute("src","https://myhkw.cn/api/player/168085259092");
+script.setAttribute("key","168085259092");
+script.setAttribute("m","1");
+document.documentElement.appendChild(script);
+</script>
+</body>
+</html>

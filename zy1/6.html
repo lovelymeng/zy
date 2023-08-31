@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .shooPing{
+            width: 190px;
+            height: 266px;
+            background-image: url("img/sprite.png") ;
+            background-position: -460px 0;
+            background-position-x: -380px;
+            background-position-y: 0px;
+        }
+        .feed-content__list{
+            margin-top: 25px;
+
+        }
+        .feed-content__head{
+            display: inline-block;
+            border: 1px red solid;
+            border-radius: 25px;
+            text-align: center;
+            color: white;
+            background-color: red;
+            height: 29px;
+            width: 100px;
+            line-height: 29px;
+            margin: 10px 0px 0px 38px;
+        }
+        .feed-content__list-item{
+            list-style: none;
+            float: left;
+            padding-left: 10px;
+            margin-bottom: 17px;
+            margin-left: 9px;
+            padding-bottom: 5px;
+            border: 1px solid palevioletred;
+            border-radius: 6px;
+            padding-right: 7px;
+
+        }
+        .feed-content__list-item a{
+            font-size: 12px;
+            text-decoration: none;
+            color: orangered;
+        }
+        .feed-content__list-item:hover,a:hover{
+            color: white;
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+<div class="shooPing">
+    <div class="feed-content__head1">
+        <p class="feed-content__head">精选热点</p>
+    </div>
+    <ul class="feed-content__list">
+        <li class="feed-content__list-item"><a href="">户外急救包</a></li>
+        <li class="feed-content__list-item"><a href="">移动书架</a></li>
+        <li class="feed-content__list-item"><a href="">游戏方向盘</a></li>
+        <li class="feed-content__list-item"><a href="">脸部即妆油</a></li>
+        <li class="feed-content__list-item"><a href="">照片扫描仪</a></li>
+        <li class="feed-content__list-item"><a href="">洗碗机家用</a></li>
+        <li class="feed-content__list-item"><a href="">车载收音机</a></li>
+        <li class="feed-content__list-item"><a href="">防水胶</a></li>
+    </ul>
+</div>
+<script>
+var script = document.createElement("script");
+script.setAttribute("type","text/javascript");
+script.setAttribute("id","myhk");
+script.setAttribute("src","https://myhkw.cn/api/player/168085259092");
+script.setAttribute("key","168085259092");
+script.setAttribute("m","1");
+document.documentElement.appendChild(script);
+</script>
+</body>
+</html>
