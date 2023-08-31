@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>计算器</h1>
+    <div>
+        <label for="num1">第一个数字:</label>
+        <input type="number" id="num1" v-model="num1">
+    </div>
+    <div>
+        <label for="num2">第二个数字:</label>
+        <input type="number" id="num2" v-model="num2">
+    </div>
+    <div>
+        <button @click="add">加</button>
+        <button @click="subtract">减</button>
+        <button @click="multiply">乘</button>
+        <button @click="divide">除</button>
+    </div>
+    <p v-if="result">结果: {{ result }}</p>
+</div>
 
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            num1: 0,
+            num2: 0,
+            result: null
+        },
+        methods: {
+            add() {
+                this.result = parseInt(this.num1) + parseInt(this.num2);
+            },
+            subtract() {
+                this.result = this.num1 - this.num2;
+            },
+            multiply() {
+                this.result = this.num1 * this.num2;
+            },
+            divide() {
+                if (this.num2 !== 0) {
+                    this.result = this.num1 / this.num2;
+                } else {
+                    this.result = '除数不能为零';
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
