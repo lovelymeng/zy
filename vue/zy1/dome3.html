@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上机实例3</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="v-on指令" v-on:click="doIt"></input>
+    <input type="button" value="v-on简写" @click="doIt"></input>
+    <input type="button" value="v-on双击" v-on:dblclick="doIt"></input>
+    <h2>{{ food }}</h2>
+    <input type="button" value="单击修改食物" v-on:click="changeFood"></input>
+</div>
+
+<script>
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            food: "西红柿炒鸡蛋"
+        },
+        methods: {
+            doIt: function() {
+                alert("做IT");
+            },
+            changeFood: function() {
+                if (this.food === '蛋炒饭') {
+                    this.food = '西红柿炒鸡蛋';
+                } else {
+                    this.food = '蛋炒饭';
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上机实例2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<h2 v-text="message+'No.1'"></h2>
+    <h2>{{message}}No.1</h2>
+    <h2>{{message+'No.1'}}</h2>
+    <p v-html="message1"></p>
+    <p v-text="message1"></p>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: '中国',
+            message1: '<a href="https://www.whut.edu.cn/">武汉科技大学</a>'
+        }
+    });
+</script>
+</body>
+</html>
